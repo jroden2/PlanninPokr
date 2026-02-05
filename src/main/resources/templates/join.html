@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${pageTitle}">Join Planning Poker Room</title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+
+<body class="container py-5">
+
+<h2 class="mb-4">Join Planning Poker Room</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title" th:text="${room.name}"></h5>
+        <p class="card-text text-muted">
+            Moderator: <strong th:text="${room.moderatorName}"></strong>
+        </p>
+    </div>
+</div>
+
+<form method="get" th:action="@{/planning}" class="mt-4">
+
+    <input type="hidden" name="id" th:value="${room.id}">
+
+    <div class="mb-3">
+        <label class="form-label">Your Name</label>
+        <input type="text"
+               class="form-control"
+               name="name"
+               required
+               placeholder="Enter your name">
+    </div>
+
+    <button class="btn btn-primary">
+        Join Room
+    </button>
+
+</form>
+
+</body>
+</html>

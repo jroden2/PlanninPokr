@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${pageTitle}">Planning Poker</title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/all.min.css}">
+</head>
+
+<body class="container py-4">
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 th:text="${room.name}"></h2>
+    <button id="copyLinkBtn"
+            class="btn btn-outline-primary btn-sm"
+            onclick="copyRoomLink()">
+        <i class="fa-solid fa-link"></i> Copy Room Link
+    </button>
+</div>
+
+<p class="text-muted">
+    Moderator: <strong th:text="${room.moderatorName}"></strong>
+</p>
+
+<hr>
+
+<div class="alert alert-info" id="activeStoryBox">
+    No story selected yet
+</div>
+
+<div id="storyControls" style="display:none;" class="mb-4">
+
+    <h4>Moderator Story Controls</h4>
+
+    <div class="mb-3">
+        <input id="storyTitle"
+               class="form-control mb-2"
+               placeholder="Story Title">
+
+        <input id="storyUrl"
+               class="form-control mb-2"
+               placeholder="Story URL (optional)">
+
+        <button class="btn btn-primary"
+                onclick="addStory()">
+            Add Story
+        </button>
+    </div>
+
+    <div class="mb-3">
+        <select id="storySelect"
+                class="form-select mb-2"
+                onchange="selectStory()">
+        </select>
+
+        <div class="d-flex gap-2">
+            <button class="btn btn-success"
+                    onclick="markComplete()">
+                Mark Complete
+            </button>
+
+            <button class="btn btn-danger"
+                    onclick="removeStory()">
+                Remove Story
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<hr>
+
+<h4>Players</h4>
+<ul id="players" class="list-group mb-4"></ul>
+
+<h4>Vote</h4>
+<div id="deck" class="d-flex flex-wrap gap-2 mb-4"></div>
+
+<div id="moderatorControls" style="display:none;">
+    <button class="btn btn-warning me-2"
+            onclick="sendReveal()">
+        Reveal Votes
+    </button>
+
+    <button class="btn btn-secondary"
+            onclick="sendReset()">
+        Reset Round
+    </button>
+</div>
+
+<script th:src="@{/js/sockjs.min.js}"></script>
+<script th:src="@{/js/stomp.min.js}"></script>
+
+<script th:inline="javascript">
+    var roomId = /*[[${room.id}]]*/ "";
+    var moderatorName = /*[[${room.moderatorName}]]*/ "";
+    var deckType = /*[[${room.deckType.name()}]]*/ "";
+    var playerName = /*[[${playerName}]]*/ "";
+
+    console.log("=== Thymeleaf Variables ===");
+    console.log("roomId:", roomId);
+    console.log("moderatorName:", moderatorName);
+    console.log("deckType:", deckType);
+    console.log("playerName:", playerName);
+    console.log("============================");
+</script>
+
+<script th:src="@{/js/app.js}"></script>
+
+</body>
+</html>
