@@ -37,12 +37,11 @@ MONGODB_URI=mongodb+srv://poker:example@localhost:27017/test-poker
 ## 📦 Getting Started
 
 ## IDE (Intellij etc)
-1. ** create a `.env` file with your details
-2. ** Run it with maven
+1. **create a `.env` file with your details**
+2. **Run it with maven**
   `mvn spring-boot:run`
-
-** OR use Docker **
-
+ß
+## **Docker**
 ### Prerequisites
 * Docker and Docker Compose installed on your machine.
 
