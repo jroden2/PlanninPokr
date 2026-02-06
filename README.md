@@ -25,7 +25,7 @@ A lightweight, self-contained, and Dockerized Planning Poker application built w
 The application is configured via environment variables. You can define these in a `.env` file in the project root:
 
 * **APP_NAME**: The custom title displayed in the application UI.
-* **MONGODB_URL**: The connection string for your MongoDB instance (e.g., mongodb://mongo:27017/db).
+* **MONGODB_URI**: The connection string for your MongoDB instance (e.g., mongodb://mongo:27017/db).
 
 ```
 APP_NAME=PlanninPokr
