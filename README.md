@@ -46,7 +46,7 @@ MONGODB_URI=mongodb+srv://poker:example@localhost:27017/test-poker
    `cd PlanninPokr`
 
 2. **Setup Environment:**
-   Create a `.env` file with your `APP_NAME` and `MONGODB_URL`.
+   Create a `.env` file with your `APP_NAME` and `MONGODB_URI`.
 
 3. **Run the Application:**
    `docker-compose up --build -d`
