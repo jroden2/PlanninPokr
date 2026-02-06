@@ -1,8 +1,204 @@
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #4338ca;
+    --primary-light: #818cf8;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --secondary: #6b7280;
+    --background: #0f172a;
+    --surface: #1e293b;
+    --surface-light: #334155;
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border: #475569;
+    --placeholder: #64748b;
+}
+
+[data-theme="light"] {
+    --background: #f8fafc;
+    --surface: #ffffff;
+    --surface-light: #f1f5f9;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --placeholder: #94a3b8;
+}
+
 body {
-    background-color: #f8f9fa;
+    background: linear-gradient(135deg, var(--background), var(--surface));
+    min-height: 100vh;
+    color: var(--text);
+    transition: background 0.3s ease, color 0.3s ease;
+    position: relative;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+h1, h2, h3, h4, h5 {
+    color: var(--text) !important;
+    font-weight: 600;
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.theme-switch {
+    width: 46px;
+    height: 22px;
+    position: relative;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-slider {
+    position: absolute;
+    inset: 0;
+    background: var(--secondary);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.theme-slider:before {
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.theme-switch input:checked + .theme-slider {
+    background: var(--primary);
+}
+
+.theme-switch input:checked + .theme-slider:before {
+    transform: translateX(22px);
+}
+
+#deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 #deck button {
-    min-width: 75px;
+    min-height: 140px;
+    font-size: 2rem;
     font-weight: bold;
+    background: var(--surface);
+    border: 2px solid var(--primary);
+    color: var(--primary-light);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+#deck button:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.4);
+}
+
+.scores-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1.25rem;
+}
+
+.score-link {
+    text-decoration: none !important;
+    color: inherit !important;
+    display: block;
+}
+
+.score-mini-card {
+    border: 2px solid var(--primary);
+    border-radius: 18px;
+    min-height: 160px;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    transition: all 0.25s ease;
+    text-decoration: none !important;
+}
+
+.score-mini-card:hover {
+    transform: translateY(-4px);
+    background: rgba(79, 70, 229, 0.10);
+}
+
+.score-big {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary-light);
+    line-height: 1;
+}
+
+.score-small {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--primary-light);
+    opacity: 0.85;
+    text-align: center;
+    word-break: break-word;
+}
+
+.room-header,
+.section-card,
+.card {
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    color: var(--text);
+}
+
+@media (max-width: 768px) {
+    .scores-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #deck {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .theme-toggle {
+        top: 0.5rem;
+        right: 0.5rem;
+    }
 }

@@ -1,36 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${pageTitle}">Planning Poker</title>
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 
 <body class="container py-4">
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 th:text="${room.name}"></h2>
-    <button id="copyLinkBtn"
-            class="btn btn-outline-primary btn-sm"
-            onclick="copyRoomLink()">
-        <i class="fa-solid fa-link"></i> Copy Room Link
-    </button>
+<div class="theme-toggle">
+    <i class="fa-solid fa-sun theme-icon"></i>
+    <label class="theme-switch">
+        <input type="checkbox" id="themeToggle">
+        <span class="theme-slider"></span>
+    </label>
+    <i class="fa-solid fa-moon theme-icon"></i>
 </div>
 
-<p class="text-muted">
-    Moderator: <strong th:text="${room.moderatorName}"></strong>
-</p>
-
-<hr>
-
-<div class="alert alert-info" id="activeStoryBox">
-    No story selected yet
+<div class="room-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h2 th:text="${room.name}" class="mb-2"></h2>
+            <p class="text-muted mb-0">
+                Moderator: <strong th:text="${room.moderatorName}"></strong>
+            </p>
+        </div>
+        <button id="copyLinkBtn"
+                class="btn btn-outline-primary btn-sm"
+                onclick="copyRoomLink()">
+            <i class="fa-solid fa-link"></i> Copy Link
+        </button>
+    </div>
 </div>
 
-<div id="storyControls" style="display:none;" class="mb-4">
+<div class="section-card">
+    <h4 class="mb-3">Current Story</h4>
+    <div class="alert alert-info" id="activeStoryBox">
+        No story selected yet
+    </div>
+</div>
 
-    <h4>Moderator Story Controls</h4>
+<div id="storyControls" style="display:none;" class="section-card">
+    <h4 class="mb-3">Story Management</h4>
 
     <div class="mb-3">
         <input id="storyTitle"
@@ -56,36 +70,40 @@
         <div class="d-flex gap-2">
             <button class="btn btn-success"
                     onclick="markComplete()">
-                Mark Complete
+                Complete
             </button>
 
             <button class="btn btn-danger"
                     onclick="removeStory()">
-                Remove Story
+                Remove
             </button>
         </div>
     </div>
-
 </div>
 
-<hr>
+<div class="section-card">
+    <h4 class="mb-3">Players</h4>
+    <ul id="players" class="list-group"></ul>
+</div>
 
-<h4>Players</h4>
-<ul id="players" class="list-group mb-4"></ul>
+<div class="section-card vote-section">
+    <h4 class="mb-3">Cast Your Vote</h4>
+    <div id="deck"></div>
+</div>
 
-<h4>Vote</h4>
-<div id="deck" class="d-flex flex-wrap gap-2 mb-4"></div>
+<div id="moderatorControls" style="display:none;" class="section-card">
+    <h4 class="mb-3">Moderator Controls</h4>
+    <div class="d-flex gap-2">
+        <button class="btn btn-warning"
+                onclick="sendReveal()">
+            Reveal Votes
+        </button>
 
-<div id="moderatorControls" style="display:none;">
-    <button class="btn btn-warning me-2"
-            onclick="sendReveal()">
-        Reveal Votes
-    </button>
-
-    <button class="btn btn-secondary"
-            onclick="sendReset()">
-        Reset Round
-    </button>
+        <button class="btn btn-secondary"
+                onclick="sendReset()">
+            Reset Round
+        </button>
+    </div>
 </div>
 
 <script th:src="@{/js/sockjs.min.js}"></script>
@@ -103,6 +121,19 @@
     console.log("deckType:", deckType);
     console.log("playerName:", playerName);
     console.log("============================");
+
+    const themeToggle = document.getElementById('themeToggle');
+    const htmlElement = document.documentElement;
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    htmlElement.setAttribute('data-theme', savedTheme);
+    themeToggle.checked = savedTheme === 'light';
+
+    themeToggle.addEventListener('change', () => {
+        const newTheme = themeToggle.checked ? 'light' : 'dark';
+        htmlElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
 </script>
 
 <script th:src="@{/js/app.js}"></script>

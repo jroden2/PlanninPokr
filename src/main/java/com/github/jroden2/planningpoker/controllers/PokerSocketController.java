@@ -1,5 +1,6 @@
 package com.github.jroden2.planningpoker.controllers;
 
+import com.github.jroden2.planningpoker.models.AcceptedScoreMessage;
 import com.github.jroden2.planningpoker.models.SelectStoryMessage;
 import com.github.jroden2.planningpoker.models.StoryMessage;
 import com.github.jroden2.planningpoker.models.dto.JoinMessage;
@@ -107,5 +108,17 @@ public class PokerSocketController {
         );
     }
 
+    @MessageMapping("/room/{roomId}/story/acceptScore")
+    @SendTo("/topic/room/{roomId}")
+    public Room acceptScore(@DestinationVariable String roomId,
+                            AcceptedScoreMessage msg) {
+
+        return service.acceptScore(
+                roomId,
+                msg.getPlayer(),
+                msg.getIndex(),
+                msg.getScore()
+        );
+    }
 
 }

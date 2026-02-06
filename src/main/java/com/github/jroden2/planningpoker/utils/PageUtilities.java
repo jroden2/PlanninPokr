@@ -22,6 +22,10 @@ public class PageUtilities {
         return String.format("%s | %s", roomName, company);
     }
 
+    public static String getScoresRoomTitle(String roomName) {
+        return String.format("Accepted Scores | %s | %s", roomName, company);
+    }
+
     public static String getCreateTitle() {
         return String.format("Create a planning poker room | %s", company);
     }

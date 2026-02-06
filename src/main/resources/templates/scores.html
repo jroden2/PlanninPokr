@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}">Planning Poker</title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="container py-4">
+
+<!-- Theme Toggle -->
+
+
+<!-- Room Header -->
+<div class="room-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h2 th:text="${room.name}" class="mb-2"></h2>
+            <p class="text-muted mb-0">
+                Moderator: <strong th:text="${room.moderatorName}"></strong>
+            </p>
+        </div>
+
+        <div class="theme-toggle">
+            <i class="fa-solid fa-sun theme-icon"></i>
+            <label class="theme-switch">
+                <input type="checkbox" id="themeToggle">
+                <span class="theme-slider"></span>
+            </label>
+            <i class="fa-solid fa-moon theme-icon"></i>
+        </div>
+    </div>
+</div>
+
+<!-- Completed Stories -->
+<div class="section-card">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">Completed Stories</h4>
+        <span th:if="${!scores.isEmpty()}"
+              class="badge bg-primary"
+              th:text="${scores.size()} + ' stories'">
+        </span>
+    </div>
+
+    <!-- Empty State -->
+    <div th:if="${scores.isEmpty()}" class="empty-state">
+        <i class="fa-solid fa-check-circle empty-state-icon"></i>
+        <p class="empty-state-text">No stories completed yet</p>
+        <p class="empty-state-subtext">
+            Mark stories as complete to see them here
+        </p>
+    </div>
+
+    <!-- Score Cards -->
+    <div th:if="${!scores.isEmpty()}" class="scores-grid">
+
+        <div th:each="score : ${scores}">
+
+            <!-- Clickable Card -->
+            <a th:if="${score.url != null and !score.url.isEmpty()}"
+               th:href="${score.url}"
+               target="_blank"
+               class="score-mini-card score-link">
+
+                <div class="score-big"
+                     th:text="${score.acceptedScore}">
+                </div>
+
+                <div class="score-small"
+                     th:text="${score.title}">
+                </div>
+
+            </a>
+
+            <!-- Non-clickable Card -->
+            <div th:if="${score.url == null or score.url.isEmpty()}"
+                 class="score-mini-card">
+
+                <div class="score-big"
+                     th:text="${score.acceptedScore}">
+                </div>
+
+                <div class="score-small"
+                     th:text="${score.title}">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Scripts -->
+<script th:inline="javascript">
+    const themeToggle = document.getElementById("themeToggle");
+    const htmlElement = document.documentElement;
+
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    htmlElement.setAttribute("data-theme", savedTheme);
+    themeToggle.checked = savedTheme === "light";
+
+    themeToggle.addEventListener("change", () => {
+        const newTheme = themeToggle.checked ? "light" : "dark";
+        htmlElement.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+    });
+</script>
+
+</body>
+</html>

@@ -35,6 +35,11 @@ function initializePage() {
     showModeratorControls();
     renderDeck();
     renderInitialPlayers();
+
+    const voteSection = document.querySelector('.vote-section');
+    if (voteSection) {
+        voteSection.style.display = 'none';
+    }
 }
 
 function showModeratorControls() {
@@ -92,6 +97,21 @@ function renderRoom(room) {
     renderStory(room);
     renderStorySelect(room);
     renderPlayers(room);
+    toggleVoteSection(room);
+}
+
+function toggleVoteSection(room) {
+    const voteSection = document.querySelector('.vote-section');
+
+    if (!room.activeStory) {
+        if (voteSection) {
+            voteSection.style.display = 'none';
+        }
+    } else {
+        if (voteSection) {
+            voteSection.style.display = 'block';
+        }
+    }
 }
 
 function renderPlayers(room) {
@@ -250,6 +270,21 @@ function markComplete() {
         alert("Please select a story first");
         return;
     }
+
+    const score = prompt("Enter the accepted score:");
+
+    if (!score || score.trim() === "") {
+        return;
+    }
+
+    stompClient.send(`/app/room/${roomId}/story/acceptScore`,
+        {},
+        JSON.stringify({
+            player: playerName,
+            index: parseInt(selectedIndex),
+            score: score.trim()
+        })
+    );
 
     stompClient.send(`/app/room/${roomId}/story/complete`,
         {},

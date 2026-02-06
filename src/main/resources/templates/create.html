@@ -1,49 +1,76 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${pageTitle}">Create Planning Poker Room</title>
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 
 <body class="container py-5">
 
-<h2 class="mb-4">Create Planning Poker Room</h2>
+<div class="theme-toggle">
+    <i class="fa-solid fa-sun theme-icon"></i>
+    <label class="theme-switch">
+        <input type="checkbox" id="themeToggle">
+        <span class="theme-slider"></span>
+    </label>
+    <i class="fa-solid fa-moon theme-icon"></i>
+</div>
 
-<form method="post" th:action="@{/planning/create}">
+<div class="section-card">
+    <h2 class="mb-4">Create Planning Poker Room</h2>
 
-    <!-- Moderator Name -->
-    <div class="mb-3">
-        <label class="form-label">Moderator Name</label>
-        <input type="text"
-               class="form-control"
-               name="moderatorName"
-               required>
-    </div>
+    <form method="post" th:action="@{/planning/create}">
 
-    <!-- Room Name -->
-    <div class="mb-3">
-        <label class="form-label">Room Name</label>
-        <input type="text"
-               class="form-control"
-               name="roomName"
-               required>
-    </div>
+        <div class="mb-3">
+            <label class="form-label">Moderator Name</label>
+            <input type="text"
+                   class="form-control"
+                   name="moderatorName"
+                   placeholder="Your name"
+                   required>
+        </div>
 
-    <!-- Deck Type -->
-    <div class="mb-3">
-        <label class="form-label">Deck Type</label>
-        <select name="deckType" class="form-select">
-            <option value="FIBONACCI">Fibonacci</option>
-            <option value="TSHIRT">T-Shirt Sizes</option>
-        </select>
-    </div>
+        <div class="mb-3">
+            <label class="form-label">Room Name</label>
+            <input type="text"
+                   class="form-control"
+                   name="roomName"
+                   placeholder="e.g., Sprint 23 Planning"
+                   required>
+        </div>
 
-    <button class="btn btn-primary">
-        Create Room
-    </button>
+        <div class="mb-3">
+            <label class="form-label">Deck Type</label>
+            <select name="deckType" class="form-select">
+                <option value="FIBONACCI">Fibonacci (1, 2, 3, 5, 8, 13...)</option>
+                <option value="TSHIRT">T-Shirt Sizes (XS, S, M, L...)</option>
+            </select>
+        </div>
 
-</form>
+        <button class="btn btn-primary">
+            Create Room
+        </button>
+
+    </form>
+</div>
+
+<script>
+    const themeToggle = document.getElementById('themeToggle');
+    const htmlElement = document.documentElement;
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    htmlElement.setAttribute('data-theme', savedTheme);
+    themeToggle.checked = savedTheme === 'light';
+
+    themeToggle.addEventListener('change', () => {
+        const newTheme = themeToggle.checked ? 'light' : 'dark';
+        htmlElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+</script>
 
 </body>
 </html>

@@ -1,11 +1,15 @@
 package com.github.jroden2.planningpoker.services;
 
 import com.github.jroden2.planningpoker.models.*;
+import com.github.jroden2.planningpoker.models.dto.StoryScoreDTO;
 import com.github.jroden2.planningpoker.repositories.RoomRepository;
 import com.github.jroden2.planningpoker.utils.SecurityUtilities;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service("roomService")
 public class RoomService {
@@ -34,7 +38,7 @@ public class RoomService {
 
     public Room getRoom(String id) {
         return repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Room not found"));
+                .orElse(null);
     }
 
     public Room joinRoom(String roomId, String playerName) {
@@ -203,6 +207,32 @@ public class RoomService {
         room.setLastActivity(Instant.now());
 
         return repo.save(room);
+    }
+
+    public Room acceptScore(String roomId, String playerName, int index, String score) {
+
+        Room room = getRoom(roomId);
+
+        if (!room.getModeratorName().equals(playerName.trim())) {
+            throw new RuntimeException("Only moderator can accept scores");
+        }
+
+        if (index < 0 || index >= room.getStories().size()) {
+            throw new RuntimeException("Invalid story index");
+        }
+
+        Story story = room.getStories().get(index);
+        story.setAcceptedScore(score);
+        story.setCompleted(true);
+
+        room.setLastActivity(Instant.now());
+
+        return repo.save(room);
+    }
+
+
+    public List<Story> getCompletedScores(String roomId) {
+        return repo.findCompletedStoryScores(roomId);
     }
 
 
