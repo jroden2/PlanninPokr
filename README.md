@@ -36,6 +36,13 @@ MONGODB_URI=mongodb+srv://poker:example@localhost:27017/test-poker
 
 ## 📦 Getting Started
 
+## IDE (Intellij etc)
+1. ** create a `.env` file with your details
+2. ** Run it with maven
+  `mvn spring-boot:run`
+
+** OR use Docker **
+
 ### Prerequisites
 * Docker and Docker Compose installed on your machine.
 
@@ -44,9 +51,6 @@ MONGODB_URI=mongodb+srv://poker:example@localhost:27017/test-poker
 1. **Clone the repository:**
    `git clone https://github.com/jroden2/PlanninPokr.git`
    `cd PlanninPokr`
-
-2. **Setup Environment:**
-   Create a `.env` file with your `APP_NAME` and `MONGODB_URI`.
 
 3. **Run the Application:**
    `docker-compose up --build -d`
