@@ -28,11 +28,18 @@
                 Moderator: <strong th:text="${room.moderatorName}"></strong>
             </p>
         </div>
-        <button id="copyLinkBtn"
-                class="btn btn-outline-primary btn-sm"
-                onclick="copyRoomLink()">
-            <i class="fa-solid fa-link"></i> Copy Link
-        </button>
+        <div class="btn-group">
+            <a th:href="@{/planning/scores(id=${room.id})}"
+               id="viewScores"
+               class="btn btn-outline-primary btn-sm">
+                <i class="fa-solid fa-list-ol"></i> Scores
+            </a>
+            <button id="copyLinkBtn"
+                    class="btn btn-outline-primary btn-sm"
+                    onclick="copyRoomLink()">
+                <i class="fa-solid fa-link"></i> Copy Link
+            </button>
+        </div>
     </div>
 </div>
 
