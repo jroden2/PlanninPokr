@@ -40,7 +40,7 @@ MONGODB_URI=mongodb+srv://poker:example@localhost:27017/test-poker
 1. **create a `.env` file with your details**
 2. **Run it with maven**
   `mvn spring-boot:run`
-ß
+
 ## **Docker**
 ### Prerequisites
 * Docker and Docker Compose installed on your machine.
@@ -55,11 +55,11 @@ MONGODB_URI=mongodb+srv://poker:example@localhost:27017/test-poker
    `docker-compose up --build -d`
 
 4. **Access the App:**
-   Open your browser to `http://localhost:8080`.
+   Open your browser to `http://localhost:8765`.
    Create your game, copy the link and send to your team to join!
    
 5. **Access the scores**
-    if you want to see a set of completed scores `http://localhost:8080/planning/scores?id=<ID>` which will then show all accepted scores and tickets.
+    if you want to see a set of completed scores `http://localhost:8765/planning/scores?id=<ID>` which will then show all accepted scores and tickets.
 ---
 
 
