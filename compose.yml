@@ -9,7 +9,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: planninpokr:latest
+    image: jroden2/planninpokr:latest
     ports:
     - "8765:8080"
     environment:
